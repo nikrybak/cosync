@@ -1,0 +1,9 @@
+node_modules
+dist
+coverage
+public/js
+data
+.git
+.github
+*.db*
+.env
