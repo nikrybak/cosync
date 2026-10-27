@@ -165,6 +165,8 @@ export class DocumentActor {
         this.noteSeen(session.replicaId, { [session.replicaId]: lastOwn.id.c }, this.deps.clock.now());
       }
       this.commit(report.applied);
+      const upTo = this.crdt.stateVector()[session.replicaId];
+      if (upTo !== undefined) session.peer.send({ v: PROTOCOL_VERSION, type: 'ack', upTo });
     });
   }
 

@@ -63,6 +63,8 @@ export type ServerMessage =
       readonly heartbeatMs: number;
     }
   | { readonly v: 1; readonly type: 'ops'; readonly ops: readonly Operation[] }
+  /** The server has durably integrated every op of the receiving replica up to clock `upTo`. */
+  | { readonly v: 1; readonly type: 'ack'; readonly upTo: number }
   | {
       readonly v: 1;
       readonly type: 'presence';
