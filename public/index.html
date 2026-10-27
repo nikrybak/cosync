@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>cosync demo</title>
+    <style>
+      :root {
+        --bg: #fafaf7;
+        --fg: #1d1d1f;
+        --muted: #6b6b70;
+        --panel: #ffffff;
+        --border: #dcdcd6;
+        --ok: #2a9d8f;
+        --warn: #e4572e;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #141416;
+          --fg: #ececec;
+          --muted: #9a9aa0;
+          --panel: #1e1e22;
+          --border: #34343a;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font:
+          15px/1.5 system-ui,
+          sans-serif;
+      }
+      main {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 24px 16px;
+        display: grid;
+        grid-template-columns: 1fr 220px;
+        gap: 16px;
+      }
+      header {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: baseline;
+      }
+      h1 {
+        margin: 0;
+        font-size: 20px;
+      }
+      .meta {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      #status[data-state='online'] {
+        color: var(--ok);
+      }
+      #status[data-state='offline'] {
+        color: var(--warn);
+      }
+      textarea {
+        width: 100%;
+        min-height: 60vh;
+        padding: 12px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--panel);
+        color: var(--fg);
+        font:
+          14px/1.6 ui-monospace,
+          monospace;
+        resize: vertical;
+      }
+      aside {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--panel);
+        padding: 12px;
+        align-self: start;
+      }
+      aside h2 {
+        margin: 0 0 8px;
+        font-size: 13px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      li {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        font-size: 13px;
+        padding: 2px 0;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex: none;
+      }
+      a {
+        color: inherit;
+      }
+      @media (max-width: 640px) {
+        main {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>cosync</h1>
+        <span class="meta">document <a id="share" href="#">...</a></span>
+        <span class="meta" id="status">loading</span>
+      </header>
+      <textarea id="editor" spellcheck="false" aria-label="Shared document"></textarea>
+      <aside>
+        <h2>Also here</h2>
+        <ul id="peers"></ul>
+      </aside>
+    </main>
+    <script type="module" src="/js/client/main.js"></script>
+  </body>
+</html>

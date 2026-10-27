@@ -134,7 +134,11 @@ describe('collaboration over WebSockets', () => {
     await spoof.connect();
     clients.push(spoof);
     spoof.socket!.send(
-      JSON.stringify({ v: 1, type: 'ops', ops: [{ type: 'insert', id: { r: 'other', c: 1 }, prev: 0, origin: null, value: 'x' }] }),
+      JSON.stringify({
+        v: 1,
+        type: 'ops',
+        ops: [{ type: 'insert', id: { r: 'other', c: 1 }, prev: 0, origin: null, value: 'x' }],
+      }),
     );
     await waitFor(() => spoof.closeCode === CloseCode.ProtocolError, 2_000, 'spoof rejected');
     expect(server.metrics.counterValue('cosync_messages_rejected_total', { reason: 'forbidden_op' })).toBe(1);
@@ -152,7 +156,15 @@ describe('collaboration over WebSockets', () => {
     expect(history).toEqual({ docId, historyLength: 9 });
 
     expect((await fetch(`${httpUrl}/api/docs/nope`)).status).toBe(404);
-    expect((await fetch(`${httpUrl}/api/docs`, { method: 'POST', body: '{"text":1}', headers: { 'content-type': 'application/json' } })).status).toBe(400);
+    expect(
+      (
+        await fetch(`${httpUrl}/api/docs`, {
+          method: 'POST',
+          body: '{"text":1}',
+          headers: { 'content-type': 'application/json' },
+        })
+      ).status,
+    ).toBe(400);
 
     const health = (await (await fetch(`${httpUrl}/health`)).json()) as Record<string, unknown>;
     expect(health).toMatchObject({ status: 'ok', openDocuments: 1, connections: 1 });

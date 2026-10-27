@@ -61,9 +61,9 @@ describe('RgaText convergence (property)', () => {
   it('replicas converge after receiving all operations in arbitrary orders', () => {
     fc.assert(
       fc.property(
-        fc.integer({ min: 2, max: 4 }).chain((n) =>
-          fc.tuple(fc.constant(n), fc.array(actionArb(n), { maxLength: 60 }), fc.integer()),
-        ),
+        fc
+          .integer({ min: 2, max: 4 })
+          .chain((n) => fc.tuple(fc.constant(n), fc.array(actionArb(n), { maxLength: 60 }), fc.integer())),
         ([replicas, actions, seed]) => {
           const rand = mulberry32(seed);
           const world: World = { docs: Array.from({ length: replicas }, (_, i) => new RgaText(`r${i}`)), log: [] };
@@ -139,7 +139,7 @@ describe('RgaText convergence (property)', () => {
         world.docs[1] = RgaText.fromSnapshot('r1', structuredClone(world.docs[1]!.snapshot()));
         run(world, actions.slice(actions.length / 2), rand);
         deliverEverything(world, rand);
-        expect(world.docs[0]!.text()).toBe(world.docs[1]!.text());
+        expect(world.docs[0]!.text()).toBe(world.docs[1].text());
       }),
       settings,
     );

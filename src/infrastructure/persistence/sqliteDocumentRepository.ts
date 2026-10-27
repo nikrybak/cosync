@@ -2,12 +2,7 @@ import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import Database from 'better-sqlite3';
 import type { Operation } from '../../crdt/index.js';
-import type {
-  DocumentRepository,
-  DocumentSnapshot,
-  DocumentStats,
-  StoredDocument,
-} from '../../domain/ports.js';
+import type { DocumentRepository, DocumentSnapshot, DocumentStats, StoredDocument } from '../../domain/ports.js';
 
 const MIGRATIONS: readonly string[] = [
   `CREATE TABLE documents (

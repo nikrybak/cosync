@@ -186,7 +186,12 @@ export class WsTransport {
     }
   }
 
-  private reject(socket: WebSocket, code: ErrorCode, message: string, closeCode: number = CloseCode.ProtocolError): void {
+  private reject(
+    socket: WebSocket,
+    code: ErrorCode,
+    message: string,
+    closeCode: number = CloseCode.ProtocolError,
+  ): void {
     this.metrics.increment('cosync_messages_rejected_total', 1, { reason: code });
     if (socket.readyState !== WebSocket.OPEN) return;
     const error: ServerMessage = { v: PROTOCOL_VERSION, type: 'error', code, message };

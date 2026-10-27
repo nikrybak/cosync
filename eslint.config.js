@@ -22,6 +22,8 @@ export default tseslint.config(
       '@typescript-eslint/consistent-type-imports': 'error',
       '@typescript-eslint/no-floating-promises': 'error',
       'no-console': 'error',
+      // Text is modelled as Unicode code points on purpose (one CRDT element each), so spreading is correct.
+      '@typescript-eslint/no-misused-spread': 'off',
     },
   },
   {

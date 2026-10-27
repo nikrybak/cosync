@@ -76,7 +76,11 @@ export class ClientMessageParser {
     const result = this.schema.safeParse(json);
     if (!result.success) {
       const issue = result.error.issues[0];
-      return { ok: false, code: 'bad_message', detail: issue ? `${issue.path.join('.')}: ${issue.message}` : 'invalid' };
+      return {
+        ok: false,
+        code: 'bad_message',
+        detail: issue ? `${issue.path.join('.')}: ${issue.message}` : 'invalid',
+      };
     }
     // The schema mirrors ClientMessage; this assignment is where the compiler checks that it does.
     const message: ClientMessage = result.data;

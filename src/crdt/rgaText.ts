@@ -58,7 +58,7 @@ export class RgaText {
   }
 
   static fromSnapshot(replicaId: ReplicaId, snapshot: RgaSnapshot): RgaText {
-    if (snapshot.version !== 1) {
+    if ((snapshot.version as number) !== 1) {
       throw new CrdtError('invalid_snapshot', `unsupported snapshot version ${String(snapshot.version)}`);
     }
     const doc = new RgaText(replicaId);
@@ -313,7 +313,8 @@ function assertWellFormed(op: Operation): void {
     throw new CrdtError('integrity', `malformed clock in ${idKey(op.id)}`);
   }
   if (op.type === 'insert') {
-    if ([...op.value].length !== 1) throw new CrdtError('integrity', `insert ${idKey(op.id)} must carry one code point`);
+    if ([...op.value].length !== 1)
+      throw new CrdtError('integrity', `insert ${idKey(op.id)} must carry one code point`);
     if (op.origin && compareIds(op.origin, op.id) >= 0) {
       throw new CrdtError('integrity', `insert ${idKey(op.id)} must be newer than its origin`);
     }

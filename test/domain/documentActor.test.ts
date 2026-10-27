@@ -43,7 +43,12 @@ describe('DocumentActor', () => {
     const clientA = new RgaText('ra');
     if (welcome.sync.mode === 'delta') clientA.apply(welcome.sync.ops);
     expect(clientA.text()).toBe('hi');
-    expect(a.ofType('presence').at(-1)?.updated.map((p) => p.sessionId)).toEqual(['s2']);
+    expect(
+      a
+        .ofType('presence')
+        .at(-1)
+        ?.updated.map((p) => p.sessionId),
+    ).toEqual(['s2']);
 
     await actor.submit('s1', clientA.insert(2, '!'));
     expect(b.ofType('ops').flatMap((m) => m.ops)).toHaveLength(1);

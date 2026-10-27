@@ -85,7 +85,11 @@ export class TestClient {
       });
       socket.once('error', reject);
     });
-    this.client.attach({ send: (data) => socket.send(data) });
+    this.client.attach({
+      send: (data) => {
+        socket.send(data);
+      },
+    });
     await waitFor(
       () => this.received.slice(before).some((m) => m.type === 'welcome' || m.type === 'error'),
       5_000,

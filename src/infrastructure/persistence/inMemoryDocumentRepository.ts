@@ -1,11 +1,6 @@
 import type { Operation } from '../../crdt/index.js';
 import { covers } from '../../crdt/index.js';
-import type {
-  DocumentRepository,
-  DocumentSnapshot,
-  DocumentStats,
-  StoredDocument,
-} from '../../domain/ports.js';
+import type { DocumentRepository, DocumentSnapshot, DocumentStats, StoredDocument } from '../../domain/ports.js';
 
 interface Row {
   createdAt: number;

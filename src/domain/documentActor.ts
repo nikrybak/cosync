@@ -309,7 +309,10 @@ export class DocumentActor {
     for (const session of this.sessions.values()) {
       if (session.id === except) continue;
       // Departures are never dropped: a missed one would leave a ghost cursor behind.
-      session.peer.send({ v: PROTOCOL_VERSION, type: 'presence', updated, removed }, { droppable: removed.length === 0 });
+      session.peer.send(
+        { v: PROTOCOL_VERSION, type: 'presence', updated, removed },
+        { droppable: removed.length === 0 },
+      );
     }
   }
 
